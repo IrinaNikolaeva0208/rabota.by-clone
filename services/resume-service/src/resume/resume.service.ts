@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { ResumeDto } from './types';
 
 @Injectable()
 export class ResumeService {
   getPage() {}
 
-  getById() {}
+  getById(id: string) {}
 
-  create() {}
+  create(resumeDto: ResumeDto) {}
 
-  update() {}
+  update(id: string, resumeDto: ResumeDto) {}
 
-  delete() {}
+  delete(id: string) {}
 }

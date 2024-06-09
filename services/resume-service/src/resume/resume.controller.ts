@@ -1,5 +1,15 @@
-import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ResumeService } from './resume.service';
+import { ResumeDto } from './types';
 
 @Controller('resume')
 export class ResumeController {
@@ -11,22 +21,25 @@ export class ResumeController {
   }
 
   @Get(':id')
-  getResumeById() {
-    return this.resumeService.getById();
+  getResumeById(@Param('id', ParseUUIDPipe) id: string) {
+    return this.resumeService.getById(id);
   }
 
   @Post()
-  createNewResume() {
-    return this.resumeService.create();
+  createNewResume(@Body() resumeDto: ResumeDto) {
+    return this.resumeService.create(resumeDto);
   }
 
   @Put(':id')
-  updateResume() {
-    return this.resumeService.update();
+  updateResume(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() resumeDto: ResumeDto,
+  ) {
+    return this.resumeService.update(id, resumeDto);
   }
 
   @Delete(':id')
-  deleteResume() {
-    return this.resumeService.delete();
+  deleteResume(@Param('id', ParseUUIDPipe) id: string) {
+    return this.resumeService.delete(id);
   }
 }
