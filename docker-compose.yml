@@ -26,6 +26,8 @@ services:
       - "${MYSQL_PORT}"
     volumes:
       - my-db:/var/lib/mysql
+    networks:
+      - app-network
 
 volumes:
   my-db:

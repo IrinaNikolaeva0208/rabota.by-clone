@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseUUIDPipe,
   Post,
@@ -38,6 +40,7 @@ export class ResumeController {
     return this.resumeService.update(id, resumeDto);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   deleteResume(@Param('id', ParseUUIDPipe) id: string) {
     return this.resumeService.delete(id);

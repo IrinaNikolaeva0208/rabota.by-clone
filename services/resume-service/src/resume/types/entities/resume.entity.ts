@@ -1,10 +1,19 @@
-import { Column, Model, PrimaryKey, Table, IsUUID } from 'sequelize-typescript';
+import {
+  Column,
+  Model,
+  PrimaryKey,
+  Table,
+  IsUUID,
+  Default,
+  DataType,
+} from 'sequelize-typescript';
 import { Sex } from '../enums';
 
 @Table
 export class Resume extends Model {
   @IsUUID(4)
   @PrimaryKey
+  @Default(DataType.UUIDV4)
   @Column
   id: string;
 
@@ -15,7 +24,7 @@ export class Resume extends Model {
   lastName: string;
 
   @Column
-  birthdate: Date;
+  birthdate: string;
 
   @Column
   sex: Sex;

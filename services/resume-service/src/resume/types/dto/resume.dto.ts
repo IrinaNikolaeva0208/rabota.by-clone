@@ -1,4 +1,4 @@
-import { IsAlpha, IsDate, IsEnum } from 'class-validator';
+import { IsAlpha, IsDate, IsDateString, IsEnum } from 'class-validator';
 import { Sex } from '..';
 
 export class ResumeDto {
@@ -8,8 +8,8 @@ export class ResumeDto {
   @IsAlpha()
   lastName: string;
 
-  @IsDate()
-  birthdate: Date;
+  @IsDateString()
+  birthdate: string;
 
   @IsEnum(Sex)
   sex: Sex;

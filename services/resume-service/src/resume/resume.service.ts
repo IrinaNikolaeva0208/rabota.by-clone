@@ -1,15 +1,36 @@
-import { Injectable } from '@nestjs/common';
-import { ResumeDto } from './types';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Resume, ResumeDto } from './types';
+import { InjectModel } from '@nestjs/sequelize';
+import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class ResumeService {
+  constructor(@InjectModel(Resume) private resumeModel: typeof Resume) {}
+
   getPage() {}
 
-  getById(id: string) {}
+  async getById(id: string) {
+    const requiredResume = await this.resumeModel.findOne({ where: { id } });
 
-  create(resumeDto: ResumeDto) {}
+    if (!requiredResume) {
+      throw new NotFoundException('Resume not found');
+    }
 
-  update(id: string, resumeDto: ResumeDto) {}
+    return requiredResume;
+  }
 
-  delete(id: string) {}
+  async create(resumeDto: ResumeDto) {
+    return await this.resumeModel.create({ ...resumeDto });
+  }
+
+  async update(id: string, resumeDto: ResumeDto) {
+    const requiredResume = await this.getById(id);
+    Object.assign(requiredResume, resumeDto);
+    return requiredResume.save();
+  }
+
+  async delete(id: string) {
+    await this.getById(id);
+    await this.resumeModel.destroy({ where: { id } });
+  }
 }

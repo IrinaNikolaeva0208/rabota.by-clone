@@ -16,6 +16,7 @@ import { ResumeModule } from './resume/resume.module';
         password: configService.get<string>('MYSQL_PASSWORD'),
         database: configService.get<string>('MYSQL_DATABASE'),
         models: [Resume],
+        autoLoadModels: true,
       }),
       imports: [ConfigModule],
       inject: [ConfigService],
