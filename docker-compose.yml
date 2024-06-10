@@ -10,10 +10,25 @@ services:
       - app-network
     ports:
       - "${RESUME_PORT}:${RESUME_PORT}"
+    depends_on:
+      - mysql
     command: npm run start:dev
     volumes:
       - './services/resume-service/src/:/app/src/'
       - './node_modules/:/app/node_modules/'
+  
+  mysql:
+    image: mysql:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${MYSQL_PORT}"
+    volumes:
+      - my-db:/var/lib/mysql
+
+volumes:
+  my-db:
 
 networks:
   app-network:
